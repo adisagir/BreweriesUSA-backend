@@ -13,15 +13,15 @@ class ApplicationController < ActionController::API
   end
 
   def token
-    request.headers["Authorization"]
+    request.headers["Authorization"].split(" ")[1] if request.headers["Authorization"]
   end
 
   def decoded_token
-    JWT.decode token, secret, true, { algorithm: 'HS256' } 
+    JWT.decode token, secret, true, { algorithm: 'HS256' } if token
   end
 
   def current_user
-    User.find(decoded_token[0]["user_id"])
+    User.find(decoded_token[0]["user_id"]) if decoded_token
   end
 
   def authenticate_user

@@ -1,4 +1,5 @@
 class SmsbackendController < ApplicationController
+  skip_before_action :authenticate_user, only: [:login]
   def login
     user = User.find_by(username: params[:username])
     is_authenticated = user.authenticate(params[:password])
