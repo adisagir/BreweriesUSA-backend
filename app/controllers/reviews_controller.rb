@@ -11,13 +11,13 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    review = Review.create(params[:review])
+    review = Review.create(review_params)
     render json: review
   end
 
   private
 
   def review_params
-    params.permit!
+    params.permit(:user_id, :brewery_id, :content, :stars, :image)
   end
 end
